@@ -8,15 +8,16 @@ import ButtonGroup from '@material-ui/core/ButtonGroup'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 
-import { typeColors } from '../styles/typeColors'
+import { getTypeColor } from '../utils/helpers'
+
 
 const useStyles = makeStyles((theme) => ({
 	root           : {
 		maxWidth : 345
 	},
-  id : {
-    color: '#B3B3B3'
-  },
+	id             : {
+		color : '#B3B3B3'
+	},
 	mediaContainer : {
 		margin       : theme.spacing(1, 'auto', 3),
 		height       : 150,
@@ -25,11 +26,11 @@ const useStyles = makeStyles((theme) => ({
 		borderRadius : '50%'
 		// marginBottom: theme.spacing(3)
 	},
-  name: {
-    fontSize: 18,
-    textTransform: 'capitalize',
-    fontWeight: 'bold'
-  },
+	name           : {
+		fontSize      : 18,
+		textTransform : 'capitalize',
+		fontWeight    : 'bold'
+	},
 	buttonGroup    : {
 		width   : '100%',
 		padding : '.1rem'
@@ -39,22 +40,16 @@ const useStyles = makeStyles((theme) => ({
 		padding       : '.15rem',
 		pointerEvents : 'none',
 		border        : 'none',
-    textTransform: 'capitalize'
+		textTransform : 'capitalize'
 	}
 }))
 
-// pokemon.id
-// pokemon.sprites.front_default
-// pokemon.name
-// pokemon.types
-// pokemon.types[0].type.name
-
 const PokeCard = ({ data }) => {
 	const [ pokemon, setPokemon ] = useState({})
-	const classes = useStyles(pokemon)
+	const classes = useStyles()
 	const URL_BASE = 'https://pokeapi.co/api/v2'
 
-  const id = pokemon.id?.toString().padStart(3, '0')
+	const id = pokemon.id?.toString().padStart(3, '0')
 
 	useEffect(
 		() => {
@@ -74,12 +69,13 @@ const PokeCard = ({ data }) => {
 		[ data ]
 	)
 
-  const capFirstChar = (str) => {
-    const firstChar = str.slice(0, 1).toUpperCase()
-    const rest = str.slice(1).toLowerCase()
-    console.log(firstChar + rest);
-    return firstChar + rest
-  }
+	// const getTypeColor = (typeName) => {
+	// 	// loop over typeColors object keys and find the key corresponding to the type name of this particular button
+	// 	const colorKey = Object.keys(typeColors).find((typeKey) => typeKey === typeName)
+	// 	// return the color value in the typeColors object at the found key 
+  //   return typeColors[colorKey]
+  // }
+
 
 	return (
 		<Grid item xs={4} sm={3}>
@@ -90,35 +86,26 @@ const PokeCard = ({ data }) => {
 						<CardMedia
 							component='img'
 							alt={pokemon.name}
-							// image={pokemon.sprites.front_default}
 							// image={pokemon.sprites?.front_default}
 							image={pokemon.sprites && pokemon.sprites.front_default}
 							title={pokemon.name}
 						/>
 					</div>
 
-					<Typography className={classes.name}align='center' gutterBottom component='h2'>
+					<Typography className={classes.name} align='center' gutterBottom component='h2'>
 						{pokemon.name}
 					</Typography>
 					<ButtonGroup className={classes.buttonGroup} aria-label='button group'>
 						{/* {pokemon.types?.map((type, idx) => ( */}
 						{pokemon.types &&
 							pokemon.types.map((type, idx) => {
-                // loop over typeColors object keys and find the key corresponding to the type name of this particular button
-								const colorKey = Object.keys(typeColors).find(
-									(typeKey) => typeKey === type.type.name
-								)
-                // access the color value in the typeColors object at the found key
-                const color = typeColors[colorKey]
-
 								return (
 									<Button
 										className={classes.button}
 										key={idx}
 										disableElevation
-										style={{ backgroundColor: `${color}`}}
+										style={{ backgroundColor: `${getTypeColor(type.type.name)}` }}
 									>
-										{/* TODO...change to sentence case */}
 										{type.type.name}
 									</Button>
 								)

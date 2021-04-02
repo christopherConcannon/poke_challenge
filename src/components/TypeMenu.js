@@ -3,6 +3,16 @@ import Typography from '@material-ui/core/Typography';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import { makeStyles } from '@material-ui/core/styles'
+
+import { getTypeColor } from '../utils/helpers'
+
+const useStyles = makeStyles(theme => ({
+  heading: {
+    fontWeight: 'bold'
+  }
+}))
+
 
 
 const TypeMenu = () => {
@@ -13,6 +23,9 @@ const TypeMenu = () => {
   //   checkedF: true,
   //   checkedG: true,
   // });
+
+  const classes = useStyles()
+
 
 	const URL_BASE = 'https://pokeapi.co/api/v2'
 
@@ -38,7 +51,7 @@ const TypeMenu = () => {
 
   return (
     <div>
-      <Typography component='h3'>
+      <Typography className={classes.heading} component='h3'>
         Filters
       </Typography>
       <FormGroup>
@@ -50,7 +63,8 @@ const TypeMenu = () => {
             //  checked={checked.checkedB}
              onChange={handleChange}
              name={`${type.name}Checked`}
-            //  color="secondary"
+            // color='primary'
+            style={{color: `${getTypeColor(type.name)}`}}
            />
          }
          label={type.name}
