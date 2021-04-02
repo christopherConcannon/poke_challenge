@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
@@ -62,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
 	}
 }))
 
-function Navbar() {
+const Navbar = ( { searchTerm, setSearchTerm }) => {
 	const classes = useStyles()
 
 	return (
@@ -83,6 +83,8 @@ function Navbar() {
 								input : classes.inputInput
 							}}
 							inputProps={{ 'aria-label': 'search' }}
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
 						/>
 					</div>
 				</Toolbar>

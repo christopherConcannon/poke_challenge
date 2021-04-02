@@ -11,28 +11,27 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const PokeDex = () => {
-	const [ pokemons, setPokemons ] = useState([])
+const PokeDex = ({ pokemons }) => {
+  // const [ pokemons, setPokemons ] = useState([])
   const [ filterType, setFilterType ] = useState([])
 	const classes = useStyles()
 
-	const URL_BASE = 'https://pokeapi.co/api/v2'
+	// const URL_BASE = 'https://pokeapi.co/api/v2'
 
-	useEffect(() => {
-    const FILTER_TYPE = filterType && `/type/${filterType}`
-		const API_URL = `${URL_BASE}/pokemon?limit=60`
-		const loadData = async () => {
-			try {
-				const res = await fetch(API_URL)
-				if (!res.ok) throw new Error('could not fetch pokemons')
-				const json = await res.json()
-				setPokemons(json.results)
-			} catch (err) {
-				console.log(err)
-			}
-		}
-		loadData()
-	}, [])
+	// useEffect(() => {
+	// 	const API_URL = `${URL_BASE}/pokemon?limit=60`
+	// 	const loadData = async () => {
+	// 		try {
+	// 			const res = await fetch(API_URL)
+	// 			if (!res.ok) throw new Error('could not fetch pokemons')
+	// 			const json = await res.json()
+	// 			setPokemons(json.results)
+	// 		} catch (err) {
+	// 			console.log(err)
+	// 		}
+	// 	}
+	// 	loadData()
+	// }, [])
 
   const updateFilterType = (name) => {
     setFilterType([
