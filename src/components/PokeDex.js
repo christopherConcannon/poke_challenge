@@ -1,10 +1,20 @@
 import React, { useState, useEffect } from 'react'
+
+import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 import TypeMenu from './TypeMenu'
 import PokeCard from './PokeCard'
+import { makeStyles } from '@material-ui/core/styles'
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    padding: theme.spacing(4, 3)
+  }
+}))
 
 const PokeDex = () => {
-	const [ data, setData ] = useState([])
+	const [ pokemons, setPokemons ] = useState([])
+	const classes = useStyles()
 
 	const URL_BASE = 'https://pokeapi.co/api/v2'
 
@@ -15,7 +25,7 @@ const PokeDex = () => {
 				const res = await fetch(API_URL)
 				if (!res.ok) throw new Error('could not fetch pokemons')
 				const json = await res.json()
-				setData(json.results)
+				setPokemons(json.results)
 			} catch (err) {
 				console.log(err)
 			}
@@ -24,17 +34,19 @@ const PokeDex = () => {
 	}, [])
 
 	return (
-		<Grid container spacing={2}>
-			<Grid item xs={4} sm={2}>
-				<TypeMenu />
-			</Grid>
-			<Grid item xs={8} sm={10}>
-				<Grid container spacing={2}>
-					{data.length > 0 &&
-						data.map((item, idx) => <PokeCard key={idx} name={item.name} />)}
+		// <Container>
+			<Grid className={classes.root} container spacing={2}>
+				<Grid item xs={4} sm={2}>
+					<TypeMenu />
+				</Grid>
+				<Grid item xs={8} sm={10}>
+					<Grid container spacing={2}>
+						{pokemons.length > 0 &&
+							pokemons.map((pokemon, idx) => <PokeCard key={idx} data={pokemon} />)}
+					</Grid>
 				</Grid>
 			</Grid>
-		</Grid>
+		// </Container>
 	)
 }
 

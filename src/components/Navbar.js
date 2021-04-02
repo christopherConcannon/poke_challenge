@@ -1,17 +1,15 @@
 import React from 'react'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
-import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
 import InputBase from '@material-ui/core/InputBase'
 import { fade, makeStyles } from '@material-ui/core/styles'
-import MenuIcon from '@material-ui/icons/Menu'
 import SearchIcon from '@material-ui/icons/Search'
-import Paper from '@material-ui/core/Paper'
 
 const useStyles = makeStyles((theme) => ({
 	root       : {
-		flexGrow : 1
+		flexGrow : 1,
+    background: '#BF625F'
 	},
 	menuButton : {
 		marginRight : theme.spacing(2)
@@ -68,17 +66,9 @@ function Navbar() {
 	const classes = useStyles()
 
 	return (
-		<div className={classes.root}>
-			<AppBar position='static' style={{ background: '#BF625F' }} elevation={0}>
+		<div >
+			<AppBar className={classes.root} position='static' elevation={0}>
 				<Toolbar>
-					{/* <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="open drawer"
-          >
-            <MenuIcon />
-          </IconButton> */}
 					<Typography className={classes.title} variant='h6' noWrap>
 						Pokedex
 					</Typography>
@@ -97,8 +87,6 @@ function Navbar() {
 					</div>
 				</Toolbar>
 			</AppBar>
-      {/* <Paper /> */}
-
 		</div>
 	)
 }
