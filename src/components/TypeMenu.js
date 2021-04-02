@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
 
 
 
-const TypeMenu = () => {
+const TypeMenu = ({ updateFilterType }) => {
   const [ types, setTypes ] = useState([])
   // const [checked, setChecked] = React.useState({
   //   checkedA: true,
@@ -44,9 +44,12 @@ const TypeMenu = () => {
 		loadData()
 	}, [])
 
-  const handleChange = (event) => {
+  const handleChange = (e) => {
     // setState({ ...checked, [event.target.name]: event.target.checked });
-  };
+    const type = e.target.name.slice(0, -7)
+    updateFilterType(type)
+    console.log('filter clicked')
+  }
 
 
   return (

@@ -13,12 +13,14 @@ const useStyles = makeStyles((theme) => ({
 
 const PokeDex = () => {
 	const [ pokemons, setPokemons ] = useState([])
+  const [ filterType, setFilterType ] = useState([])
 	const classes = useStyles()
 
 	const URL_BASE = 'https://pokeapi.co/api/v2'
 
 	useEffect(() => {
-		const API_URL = `${URL_BASE}/pokemon`
+    const FILTER_TYPE = filterType && `/type/${filterType}`
+		const API_URL = `${URL_BASE}/pokemon?limit=60`
 		const loadData = async () => {
 			try {
 				const res = await fetch(API_URL)
@@ -32,11 +34,17 @@ const PokeDex = () => {
 		loadData()
 	}, [])
 
+  const updateFilterType = (name) => {
+    setFilterType([
+      ...filterType,
+      name
+    ])
+  }
+
 	return (
-		// <Container>
 			<Grid className={classes.root} container spacing={2}>
 				<Grid item xs={4} sm={2}>
-					<TypeMenu />
+					<TypeMenu updateFilterType={updateFilterType} />
 				</Grid>
 				<Grid item xs={8} sm={10}>
 					<Grid container spacing={2}>
@@ -45,7 +53,6 @@ const PokeDex = () => {
 					</Grid>
 				</Grid>
 			</Grid>
-		// </Container>
 	)
 }
 

@@ -10,7 +10,6 @@ import Typography from '@material-ui/core/Typography'
 
 import { getTypeColor } from '../utils/helpers'
 
-
 const useStyles = makeStyles((theme) => ({
 	root           : {
 		maxWidth : 345
@@ -49,7 +48,9 @@ const PokeCard = ({ data }) => {
 	const classes = useStyles()
 	const URL_BASE = 'https://pokeapi.co/api/v2'
 
-	const id = pokemon.id?.toString().padStart(3, '0')
+  console.log('poke data: ', data.url);
+
+	const id = pokemon.id ? pokemon.id.toString().padStart(3, '0') : ''
 
 	useEffect(
 		() => {
@@ -69,51 +70,52 @@ const PokeCard = ({ data }) => {
 		[ data ]
 	)
 
-	// const getTypeColor = (typeName) => {
-	// 	// loop over typeColors object keys and find the key corresponding to the type name of this particular button
-	// 	const colorKey = Object.keys(typeColors).find((typeKey) => typeKey === typeName)
-	// 	// return the color value in the typeColors object at the found key 
-  //   return typeColors[colorKey]
-  // }
-
-
 	return (
-		<Grid item xs={4} sm={3}>
-			<Card className={classes.root}>
-				<CardContent>
-					<Typography className={classes.id} component='h3'>{`#${id}`}</Typography>
-					<div className={classes.mediaContainer}>
-						<CardMedia
-							component='img'
-							alt={pokemon.name}
-							// image={pokemon.sprites?.front_default}
-							image={pokemon.sprites && pokemon.sprites.front_default}
-							title={pokemon.name}
-						/>
-					</div>
+		<React.Fragment>
+			{pokemon && (
+				<Grid item xs={4} sm={3}>
+					<Card className={classes.root}>
+						<CardContent>
+							<Typography className={classes.id} component='h3'>{`#${id}`}</Typography>
+							<div className={classes.mediaContainer}>
+								<CardMedia
+									component='img'
+									alt={pokemon.name}
+									// image={pokemon.sprites?.front_default}
+									image={pokemon.sprites && pokemon.sprites.front_default}
+									title={pokemon.name}
+								/>
+							</div>
 
-					<Typography className={classes.name} align='center' gutterBottom component='h2'>
-						{pokemon.name}
-					</Typography>
-					<ButtonGroup className={classes.buttonGroup} aria-label='button group'>
-						{/* {pokemon.types?.map((type, idx) => ( */}
-						{pokemon.types &&
-							pokemon.types.map((type, idx) => {
-								return (
-									<Button
-										className={classes.button}
-										key={idx}
-										disableElevation
-										style={{ backgroundColor: `${getTypeColor(type.type.name)}` }}
-									>
-										{type.type.name}
-									</Button>
-								)
-							})}
-					</ButtonGroup>
-				</CardContent>
-			</Card>
-		</Grid>
+							<Typography
+								className={classes.name}
+								align='center'
+								gutterBottom
+								component='h2'
+							>
+								{pokemon.name}
+							</Typography>
+							<ButtonGroup className={classes.buttonGroup} aria-label='button group'>
+								{/* {pokemon.types?.map((type, idx) => ( */}
+								{pokemon.types &&
+									pokemon.types.map((type, idx) => {
+										return (
+											<Button
+												className={classes.button}
+												key={idx}
+												disableElevation
+												style={{ backgroundColor: `${getTypeColor(type.type.name)}` }}
+											>
+												{type.type.name}
+											</Button>
+										)
+									})}
+							</ButtonGroup>
+						</CardContent>
+					</Card>
+				</Grid>
+			)}
+		</React.Fragment>
 
 		// QUESTION -- is there a method to access resources located at a url which is a JSON property.  So for example I could access the individual pokemon data like below so I wouldn't have to make network requests for each individual pokemon.  the JSON object returned by the API_URL/pokemon endpoint looks like { name: 'whatever', url: 'https://pokeapi.co/api/v2/pokemon/1/'}, but trying to access
 		// <Grid item xs={4} sm={3}>
