@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
 
 
 
-const TypeMenu = ({ updateFilterTypes }) => {
+const TypeMenu = () => {
   const [ types, setTypes ] = useState([])
   // const [checked, setChecked] = React.useState({
   //   checkedA: true,
@@ -43,14 +43,6 @@ const TypeMenu = ({ updateFilterTypes }) => {
 		loadData()
 	}, [])
 
-  const handleChange = (e) => {
-    // setState({ ...checked, [event.target.name]: event.target.checked });
-    const filterType = e.target.name.slice(0, -7)
-    // console.log(filterType);
-    updateFilterTypes(filterType)
-  }
-
-
   return (
     <div>
       <Typography className={classes.heading} component='h3'>
@@ -63,7 +55,6 @@ const TypeMenu = ({ updateFilterTypes }) => {
          control={
            <Checkbox
             //  checked={checked.checkedB}
-             onChange={handleChange}
              name={`${type.name}Checked`}
             // color='primary'
             style={{color: `${getTypeColor(type.name)}`}}

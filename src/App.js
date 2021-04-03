@@ -7,8 +7,6 @@ import PokeDex from './components/PokeDex'
 function App() {
 	const [ pokemons, setPokemons ] = useState([])
 	const [ searchTerm, setSearchTerm ] = useState('')
-	const [ filterTypes, setFilterTypes ] = useState([])
-	// const [ filteredPokemons, setFilteredPokemons ] = useState([])
 
 	const URL_BASE = 'https://pokeapi.co/api/v2'
 
@@ -42,98 +40,9 @@ function App() {
 		[  ]
 	)
 
-  // WORKING WITH ONE FILTER
-	// useEffect(
-	// 	() => {
-	// 		if (filterTypes[0] !== undefined) {
-	// 			const API_URL = `${URL_BASE}/type/${filterTypes[0]}`
-	// 			const loadData = async () => {
-	// 				try {
-	// 					const res = await fetch(API_URL)
-	// 					if (!res.ok) throw new Error('could not fetch types')
-	// 					const json = await res.json()
-	// 					console.log('filtered by type: ', json.pokemon[0].pokemon.name);
-	//           const pokeDexMembers = json.pokemon.filter(pokeDexMember => {
-	//              const nameArray = pokemons.map(pokemon => pokemon.name)
-	//              return nameArray.includes(pokeDexMember.pokemon.name)
-	//           })
-	//           console.log("pokeDexMembers of type: ", pokeDexMembers)
-	// 					const filteredPokemons = pokeDexMembers.map((pdm) => {
-	//             const id = pdm.pokemon.url.slice(34, -1)
-	//             const name = pdm.pokemon.name
-	// 						return {id, name}
-	// 					})
-	// 					// console.log(filteredPokemons)
-	//           // 33
-	// 					setPokemons(filteredPokemons)
-	// 				} catch (err) {
-	// 					console.log(err)
-	// 				}
-	// 			}
-	// 			loadData()
-	// 		}
-	// 	},
-	// 	[ filterTypes ]
-	// )
-
-	useEffect(
-		() => {
-			if (filterTypes[0] !== undefined) {
-        // loop over each filter type and fetch data
-        let filteredPokemons = []
-				filterTypes.forEach((type) => {
-					const API_URL = `${URL_BASE}/type/${type}`
-					const loadData = async () => {
-						try {
-							const res = await fetch(API_URL)
-							if (!res.ok) throw new Error('could not fetch types')
-							const json = await res.json()
-							// console.log('filtered by type: ', json.pokemon[0].pokemon.name);
-              // the type endpoint returns all pokemons that match the type, not just the ones from the pokedex, so we need to filter the ones that match the type and are from the pokedex
-							const pokeDexMembers = json.pokemon.filter((pokeDexMember) => {
-								const nameArray = pokemons.map((pokemon) => pokemon.name)
-								return nameArray.includes(pokeDexMember.pokemon.name)
-							})
-							// console.log("pokeDexMembers of type: ", pokeDexMembers)
-              // next we want to map the results to an array of objects that match our data structure for pokemons
-							const filteredGroup = pokeDexMembers.map((pdm) => {
-								const id = pdm.pokemon.url.slice(34, -1)
-								const name = pdm.pokemon.name
-								return { id, name }
-							})
-							// console.log("filteredGroup: ", filteredGroup);
-              filteredPokemons.push(...filteredGroup)
-
-              // setPokemons(filteredPokemons)
-						} catch (err) {
-							console.log(err)
-						}
-					}
-					loadData()
-				})
-        
-        console.log('filteredPokemons: ', filteredPokemons)
-				// setPokemons(filteredPokemons)
-			}
-		},
-		[ filterTypes ]
-    )
-
 	const search = () => {
 		return pokemons.filter((pokemon) => {
 			return pokemon.name.indexOf(searchTerm) > -1
-		})
-	}
-
-	const updateFilterTypes = (name) => {
-		if (filterTypes.length === 2) {
-			console.log('you can only have 2 filter types')
-			return
-		}
-		setFilterTypes((prev) => {
-			return prev.includes(name)
-				? prev.filter((type) => type !== name)
-				: [ ...prev, name ]
 		})
 	}
 
@@ -141,8 +50,8 @@ function App() {
 		<React.Fragment>
 			<CssBaseline />
 			<Navbar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-			{/* <PokeDex pokemons={pokemons} updateFilterTypes={updateFilterTypes} /> */}
-			<PokeDex pokemons={search(pokemons)} updateFilterTypes={updateFilterTypes} />
+			{/* <PokeDex pokemons={pokemons} /> */}
+			<PokeDex pokemons={search(pokemons)} />
 		</React.Fragment>
 	)
 }
