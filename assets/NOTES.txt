@@ -32,6 +32,8 @@ export const typeColors = {
   fairy: "#D685AD",
 };
 
+QUESTION...how to refactor to remove styling rules from each component to a separate styles file and just bring useStyles hook into each component.  Complicated by the whole 'root' situation
+
 FILTER FUNCTIONALITY
 .when user checks a type box, we want to return only pokemons that have that type
 .each pokemon has 1 or 2 types, but no more

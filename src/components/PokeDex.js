@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 
 import Grid from '@material-ui/core/Grid'
 import TypeMenu from './TypeMenu'
@@ -11,36 +11,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const PokeDex = ({ types, pokemons, updateFilterTypes }) => {
-  // const [ pokemons, setPokemons ] = useState([])
-  // const [ filterTypes, setFilterTypes ] = useState([])
+const PokeDex = ({ pokemons, updateFilterTypes }) => {
+
 	const classes = useStyles()
-
-	// const URL_BASE = 'https://pokeapi.co/api/v2'
-
-	// useEffect(() => {
-	// 	const API_URL = `${URL_BASE}/pokemon?limit=60`
-	// 	const loadData = async () => {
-	// 		try {
-	// 			const res = await fetch(API_URL)
-	// 			if (!res.ok) throw new Error('could not fetch pokemons')
-	// 			const json = await res.json()
-	// 			setPokemons(json.results)
-	// 		} catch (err) {
-	// 			console.log(err)
-	// 		}
-	// 	}
-	// 	loadData()
-	// }, [])
-
-  // const updateFilterTypes = (name) => {
-  //   setFilterTypes(prev => {
-  //     return prev.includes(name) ? prev.filter(type => type !== name) : ([
-  //       ...prev,
-  //       name
-  //     ])
-  //   })
-  // }
 
 	return (
 			<Grid className={classes.root} container spacing={2}>

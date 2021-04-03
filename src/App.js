@@ -8,7 +8,6 @@ function App() {
 	const [ pokemons, setPokemons ] = useState([])
 	const [ searchTerm, setSearchTerm ] = useState('')
 	const [ filterTypes, setFilterTypes ] = useState([])
-	// const [ filteredPokemons, setFilteredPokemons ] = useState([])
 
 	const URL_BASE = 'https://pokeapi.co/api/v2'
 
@@ -38,7 +37,7 @@ function App() {
 			}
 		}
 		loadData()
-	}, [])
+	}, [filterTypes])
 
 	// useEffect(
 	// 	() => {
@@ -78,30 +77,38 @@ function App() {
 	// 	[ filterTypes ]
 	// )
 
-	// useEffect(
-	// 	() => {
-	// 		if (filterTypes[0] !== undefined) {
-	// 			const API_URL = `${URL_BASE}/type/${filterTypes[0]}`
-	// 			const loadData = async () => {
-	// 				try {
-	// 					const res = await fetch(API_URL)
-	// 					if (!res.ok) throw new Error('could not fetch types')
-	// 					const json = await res.json()
-	// 					// const filteredPokemons = json
-	// 					const filteredPokemons = json.pokemon.pokemon?.map((pokemon) => {
-	// 						return pokemon.name
-	// 					})
-	// 					console.log(filteredPokemons)
-	// 					setPokemons(filteredPokemons)
-	// 				} catch (err) {
-	// 					console.log(err)
-	// 				}
-	// 			}
-	// 			loadData()
-	// 		}
-	// 	},
-	// 	[ filterTypes ]
-	// )
+	useEffect(
+		() => {
+			if (filterTypes[0] !== undefined) {
+				const API_URL = `${URL_BASE}/type/${filterTypes[0]}`
+				const loadData = async () => {
+					try {
+						const res = await fetch(API_URL)
+						if (!res.ok) throw new Error('could not fetch types')
+						const json = await res.json()
+						console.log('filtered by type: ', json.pokemon[0].pokemon.name);
+            const pokeDexMembers = json.pokemon.filter(pokeDexMember => {
+               const nameArray = pokemons.map(pokemon => pokemon.name)
+               return nameArray.includes(pokeDexMember.pokemon.name)
+            })
+            console.log("pokeDexMembers of type: ", pokeDexMembers)
+						const filteredPokemons = pokeDexMembers.map((pdm) => {
+              const id = pdm.pokemon.url.slice(34, -1)
+              const name = pdm.pokemon.name
+							return {id, name}
+						})
+						// console.log(filteredPokemons)
+            // 33
+						setPokemons(filteredPokemons)
+					} catch (err) {
+						console.log(err)
+					}
+				}
+				loadData()
+			}
+		},
+		[ filterTypes ]
+	)
 
 	const search = () => {
 		return pokemons.filter((pokemon) => {
@@ -110,6 +117,10 @@ function App() {
 	}
 
 	const updateFilterTypes = (name) => {
+    if (filterTypes.length === 2) {
+      console.log('greater than 2')
+      return
+    }
 		setFilterTypes((prev) => {
 			return prev.includes(name)
 				? prev.filter((type) => type !== name)

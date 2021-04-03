@@ -25,7 +25,7 @@ const TypeMenu = ({ updateFilterTypes }) => {
   // });
 
   const classes = useStyles()
-  
+
 	const URL_BASE = 'https://pokeapi.co/api/v2'
 
 	useEffect(() => {
@@ -45,8 +45,9 @@ const TypeMenu = ({ updateFilterTypes }) => {
 
   const handleChange = (e) => {
     // setState({ ...checked, [event.target.name]: event.target.checked });
-    const type = e.target.name.slice(0, -7)
-    updateFilterTypes(type)
+    const filterType = e.target.name.slice(0, -7)
+    // console.log(filterType);
+    updateFilterTypes(filterType)
   }
 
 
