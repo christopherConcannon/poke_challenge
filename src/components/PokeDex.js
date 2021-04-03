@@ -11,9 +11,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const PokeDex = ({ pokemons }) => {
+const PokeDex = ({ types, pokemons, updateFilterTypes }) => {
   // const [ pokemons, setPokemons ] = useState([])
-  const [ filterType, setFilterType ] = useState([])
+  // const [ filterTypes, setFilterTypes ] = useState([])
 	const classes = useStyles()
 
 	// const URL_BASE = 'https://pokeapi.co/api/v2'
@@ -33,17 +33,19 @@ const PokeDex = ({ pokemons }) => {
 	// 	loadData()
 	// }, [])
 
-  const updateFilterType = (name) => {
-    setFilterType([
-      ...filterType,
-      name
-    ])
-  }
+  // const updateFilterTypes = (name) => {
+  //   setFilterTypes(prev => {
+  //     return prev.includes(name) ? prev.filter(type => type !== name) : ([
+  //       ...prev,
+  //       name
+  //     ])
+  //   })
+  // }
 
 	return (
 			<Grid className={classes.root} container spacing={2}>
 				<Grid item xs={4} sm={2}>
-					<TypeMenu updateFilterType={updateFilterType} />
+					<TypeMenu updateFilterTypes={updateFilterTypes} />
 				</Grid>
 				<Grid item xs={8} sm={10}>
 					<Grid container spacing={2}>

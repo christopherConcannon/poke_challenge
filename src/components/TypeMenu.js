@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
 
 
 
-const TypeMenu = ({ updateFilterType }) => {
+const TypeMenu = ({ updateFilterTypes }) => {
   const [ types, setTypes ] = useState([])
   // const [checked, setChecked] = React.useState({
   //   checkedA: true,
@@ -25,8 +25,7 @@ const TypeMenu = ({ updateFilterType }) => {
   // });
 
   const classes = useStyles()
-
-
+  
 	const URL_BASE = 'https://pokeapi.co/api/v2'
 
 	useEffect(() => {
@@ -47,8 +46,7 @@ const TypeMenu = ({ updateFilterType }) => {
   const handleChange = (e) => {
     // setState({ ...checked, [event.target.name]: event.target.checked });
     const type = e.target.name.slice(0, -7)
-    updateFilterType(type)
-    console.log('filter clicked')
+    updateFilterTypes(type)
   }
 
 

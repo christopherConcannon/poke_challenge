@@ -48,8 +48,6 @@ const PokeCard = ({ data }) => {
 	const classes = useStyles()
 	const URL_BASE = 'https://pokeapi.co/api/v2'
 
-  console.log('poke data: ', data.url);
-
 	const id = pokemon.id ? pokemon.id.toString().padStart(3, '0') : ''
 
 	useEffect(
