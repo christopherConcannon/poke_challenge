@@ -31,3 +31,14 @@ export const typeColors = {
   steel: "#B7B7CE",
   fairy: "#D685AD",
 };
+
+FILTER FUNCTIONALITY
+.when user checks a type box, we want to return only pokemons that have that type
+.each pokemon has 1 or 2 types, but no more
+.if the user clicks on 2 checkboxes, we want to return only pokemons that have both those types as their types
+.if the user clicks on a checkbox that is checked, we want to uncheck it and remove that type as a filter (though a pokemon can still have that type if it is the other type a pokemon has besides the other filter type)
+.if there are two types already selected and the user clicks on a third type checkbox, there are 2 options for how to handle it...
+    1.  replace the the type that was selected first with the new one
+    2.  disable any future clicks until the user deselects one of the existing types.   this option may require some feedback to the user to let them know they must deselect a type...perhaps disable all the others?
+.there needs to be component level state in the TypeMenu to keep track of the number of checkboxes clicked
+.

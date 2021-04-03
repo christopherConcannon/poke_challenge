@@ -23,7 +23,6 @@ const useStyles = makeStyles((theme) => ({
 		width        : 150,
 		background   : '#F0F0F0',
 		borderRadius : '50%'
-		// marginBottom: theme.spacing(3)
 	},
 	name           : {
 		fontSize      : 18,
@@ -52,6 +51,7 @@ const PokeCard = ({ data }) => {
 
 	useEffect(
 		() => {
+			// const API_URL = `${URL_BASE}/pokemon/${data.id}`
 			const API_URL = `${URL_BASE}/pokemon/${data.name}`
 			const loadData = async () => {
 				try {
@@ -64,6 +64,13 @@ const PokeCard = ({ data }) => {
 				}
 			}
 			loadData()
+
+			// WITHOUT CLEANUP FUNCTION I GET THIS WARNING WHEN I PERFORM A SEARCH
+			// Warning: Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function.
+			// at PokeCard
+
+			// cleanup to address warning seen above
+			return () => setPokemon({})
 		},
 		[ data ]
 	)
