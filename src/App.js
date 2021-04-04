@@ -10,7 +10,6 @@ function App() {
 
 	const URL_BASE = 'https://pokeapi.co/api/v2'
 
-	// NOTE...Diglett (#50) is not availale by it's name in the API, though it is by it's id.  API must be broken but I need to access by name for the filtering to work.  I'm mapping the initial fetch to an array of objects with {id, name} so I have both available, but in the PokeCard component I'm making the fetch based on name. I also need the name for the search function.
 
 	// WORKING BASIC FETCH FOR ALL POKEMONS WITHOUT TYPE FILTERING
 	// fetch all pokemons {names, url}.  the names will be used in the PokeCard to make another request for each card for the specific pokemon data
@@ -60,7 +59,7 @@ function App() {
 
           // const pokeArr = pokeObjArr.map(async poke => {
           pokeObjArr.forEach(async poke => {
-            const POKE_URL = `${URL_BASE}/pokemon/${poke.name}`
+            const POKE_URL = `${URL_BASE}/pokemon/${poke.id}`
             const pokeRes = await fetch(POKE_URL)
             // if (!pokeRes.ok) throw new Error('could not fetch pokemons')
             const pokeJSON = await pokeRes.json()
