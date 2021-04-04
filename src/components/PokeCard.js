@@ -51,8 +51,8 @@ const PokeCard = ({ data }) => {
 
 	useEffect(
 		() => {
-			// const API_URL = `${URL_BASE}/pokemon/${data.id}`
-			const API_URL = `${URL_BASE}/pokemon/${data.name}`
+			const API_URL = `${URL_BASE}/pokemon/${data.id}`
+			// const API_URL = `${URL_BASE}/pokemon/${data.name}`
 			const loadData = async () => {
 				try {
 					const res = await fetch(API_URL)

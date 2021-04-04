@@ -7,6 +7,7 @@ import PokeDex from './components/PokeDex'
 function App() {
 	const [ pokemons, setPokemons ] = useState([])
 	const [ searchTerm, setSearchTerm ] = useState('')
+	const [ filterTypes, setFilterTypes ] = useState([])
 
 	const URL_BASE = 'https://pokeapi.co/api/v2'
 
@@ -27,18 +28,62 @@ function App() {
 					// console.log(json.pokemon_entries.map(entry => {
 					//   return {id: entry.entry_number, name: entry.pokemon_species.name}
 					// }))
-					const nameArray = json.pokemon_entries.map((entry) => {
+					const pokeObjArr = json.pokemon_entries.map((entry) => {
 						return { id: entry.entry_number, name: entry.pokemon_species.name }
 					})
-					setPokemons(nameArray)
+					setPokemons(pokeObjArr)
 				} catch (err) {
 					console.log(err)
 				}
 			}
 			loadData()
 		},
-		[  ]
+		[]
 	)
+	useEffect(
+		() => {
+			if (filterTypes.length === 0) return  
+        // loop over each filter type and fetch data
+        // let filterablePokemons = [...pokemons]
+        let filteredPokemons = []
+				filterTypes.forEach((type) => {
+					const API_URL = `${URL_BASE}/type/${type}`
+					const loadData = async () => {
+						try {
+							const res = await fetch(API_URL)
+							if (!res.ok) throw new Error('could not fetch types')
+							const json = await res.json()
+							// console.log('filtered by type: ', json.pokemon[0].pokemon.name);
+              // the type endpoint returns all pokemons that match the type, not just the ones from the pokedex, so we need to filter the ones that match the type and are from the pokedex
+							const pokeDexMembers = json.pokemon.filter((pokeDexMember) => {
+								const nameArray = pokemons.map((pokemon) => pokemon.name)
+								return nameArray.includes(pokeDexMember.pokemon.name)
+							})
+							// console.log("pokeDexMembers of type: ", pokeDexMembers)
+              // next we want to map the results to an array of objects that match our data structure for pokemons
+							const filteredGroup = pokeDexMembers.map((pdm) => {
+								const id = pdm.pokemon.url.slice(34, -1)
+								const name = pdm.pokemon.name
+								return { id, name }
+							})
+							// console.log("filteredGroup: ", filteredGroup);
+              filteredPokemons.push(...filteredGroup)
+
+              console.log('filteredPokemons: ', filteredPokemons)
+              // setPokemons(filteredPokemons)
+						} catch (err) {
+							console.log(err)
+						}
+					}
+					loadData()
+				})
+        
+        console.log('filteredPokemons: ', filteredPokemons)
+				// setPokemons(filteredPokemons)
+			
+		},
+		[ filterTypes ]
+    )
 
 	const search = () => {
 		return pokemons.filter((pokemon) => {
@@ -46,12 +91,16 @@ function App() {
 		})
 	}
 
+  const updateFilterTypes = (types) => {
+		setFilterTypes(types)
+	}
+
 	return (
 		<React.Fragment>
 			<CssBaseline />
 			<Navbar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 			{/* <PokeDex pokemons={pokemons} /> */}
-			<PokeDex pokemons={search(pokemons)} />
+			<PokeDex pokemons={search(pokemons)} updateFilterTypes={updateFilterTypes} />
 		</React.Fragment>
 	)
 }

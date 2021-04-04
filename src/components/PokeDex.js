@@ -11,14 +11,14 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const PokeDex = ({ pokemons }) => {
+const PokeDex = ({ pokemons, updateFilterTypes }) => {
 
 	const classes = useStyles()
 
 	return (
 			<Grid className={classes.root} container spacing={2}>
 				<Grid item xs={4} sm={2}>
-					<TypeMenu />
+					<TypeMenu updateFilterTypes={updateFilterTypes} />
 				</Grid>
 				<Grid item xs={8} sm={10}>
 					<Grid container spacing={2}>
