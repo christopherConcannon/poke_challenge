@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 import Card from '@material-ui/core/Card'
@@ -43,52 +43,52 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const PokeCard = ({ data }) => {
-  const { id, name, img, types } = data
-	// const [ pokemon, setPokemon ] = useState({})
+	const [ pokemon, setPokemon ] = useState({})
 	const classes = useStyles()
-	// const URL_BASE = 'https://pokeapi.co/api/v2'
+	const URL_BASE = 'https://pokeapi.co/api/v2'
 
-	const paddedId = id ? id.toString().padStart(3, '0') : ''
+	const id = pokemon.id ? pokemon.id.toString().padStart(3, '0') : ''
 
-	// useEffect(
-	// 	() => {
-	// 		// const API_URL = `${URL_BASE}/pokemon/${data.id}`
-	// 		const API_URL = `${URL_BASE}/pokemon/${data.name}`
-	// 		const loadData = async () => {
-	// 			try {
-	// 				const res = await fetch(API_URL)
-	// 				if (!res.ok) throw new Error('could not get poke data')
-	// 				const json = await res.json()
-	// 				setPokemon(json)
-	// 			} catch (err) {
-	// 				console.log(err)
-	// 			}
-	// 		}
-	// 		loadData()
+	useEffect(
+		() => {
+			// const API_URL = `${URL_BASE}/pokemon/${data.id}`
+			const API_URL = `${URL_BASE}/pokemon/${data.name}`
+			const loadData = async () => {
+				try {
+					const res = await fetch(API_URL)
+					if (!res.ok) throw new Error('could not get poke data')
+					const json = await res.json()
+					setPokemon(json)
+				} catch (err) {
+					console.log(err)
+				}
+			}
+			loadData()
 
-	// 		// WITHOUT CLEANUP FUNCTION I GET THIS WARNING WHEN I PERFORM A SEARCH
-	// 		// Warning: Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function.
-	// 		// at PokeCard
+			// WITHOUT CLEANUP FUNCTION I GET THIS WARNING WHEN I PERFORM A SEARCH
+			// Warning: Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function.
+			// at PokeCard
 
-	// 		// cleanup to address warning seen above
-	// 		return () => setPokemon({})
-	// 	},
-	// 	[ data ]
-	// )
+			// cleanup to address warning seen above
+			return () => setPokemon({})
+		},
+		[ data ]
+	)
 
 	return (
 		<React.Fragment>
-			{data && (
+			{pokemon && (
 				<Grid item xs={4} sm={3}>
 					<Card className={classes.root}>
 						<CardContent>
-							<Typography className={classes.id} component='h3'>{`#${paddedId}`}</Typography>
+							<Typography className={classes.id} component='h3'>{`#${id}`}</Typography>
 							<div className={classes.mediaContainer}>
 								<CardMedia
 									component='img'
-									alt={name}
-									image={img}
-									title={name}
+									alt={pokemon.name}
+									// image={pokemon.sprites?.front_default}
+									image={pokemon.sprites && pokemon.sprites.front_default}
+									title={pokemon.name}
 								/>
 							</div>
 
@@ -98,20 +98,20 @@ const PokeCard = ({ data }) => {
 								gutterBottom
 								component='h2'
 							>
-								{name}
+								{pokemon.name}
 							</Typography>
 							<ButtonGroup className={classes.buttonGroup} aria-label='button group'>
 								{/* {pokemon.types?.map((type, idx) => ( */}
-								{types &&
-									types.map((type, idx) => {
+								{pokemon.types &&
+									pokemon.types.map((type, idx) => {
 										return (
 											<Button
 												className={classes.button}
 												key={idx}
 												disableElevation
-												style={{ backgroundColor: `${getTypeColor(type)}` }}
+												style={{ backgroundColor: `${getTypeColor(type.type.name)}` }}
 											>
-												{type}
+												{type.type.name}
 											</Button>
 										)
 									})}
