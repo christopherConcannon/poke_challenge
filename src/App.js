@@ -71,7 +71,12 @@ function App() {
               img: pokeJSON.sprites.front_default,
               types: pokeJSON.types.map(type => type.type.name)
             }
-            await setPokemons(prev => [...prev, pokeObj])
+            // results show up in jumbled order sometimes, I think because certain results go slower.  so I sort the results by id before updating state
+            await setPokemons(prev => [...prev, pokeObj].sort((a, b) => {
+              if (a.id < b.id) return -1
+              if (a.id > b.id) return 1
+              return 0
+            }))
           })
 				} catch (err) {
 					console.log(err)
