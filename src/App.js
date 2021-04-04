@@ -7,10 +7,9 @@ import PokeDex from './components/PokeDex'
 function App() {
 	const [ pokemons, setPokemons ] = useState([])
 	const [ searchTerm, setSearchTerm ] = useState('')
-  const [ filterTypes, setFilterTypes ] = useState([])
+	const [ filterTypes, setFilterTypes ] = useState([])
 
 	const URL_BASE = 'https://pokeapi.co/api/v2'
-
 
 	// WORKING BASIC FETCH FOR ALL POKEMONS WITHOUT TYPE FILTERING
 	// fetch all pokemons {names, url}.  the names will be used in the PokeCard to make another request for each card for the specific pokemon data
@@ -40,51 +39,65 @@ function App() {
 	// 	[]
 	// )
 
-  // REFACTORED TO FETCH INDIVIDUAL POKES FROM APP COMPONENT
+	// REFACTORED TO FETCH INDIVIDUAL POKES FROM APP COMPONENT
+	useEffect(() => {
+		// const API_URL = `${URL_BASE}/pokemon`
+		const DEX_URL = `${URL_BASE}/pokedex/2`
+		const loadData = async () => {
+			try {
+				const dexRes = await fetch(DEX_URL)
+				if (!dexRes.ok) throw new Error('could not fetch pokedex')
+				const dexJSON = await dexRes.json()
+				// setPokemons(json.results)
+				// console.log(json.pokemon_entries.map(entry => {
+				//   return {id: entry.entry_number, name: entry.pokemon_species.name}
+				// }))
+				const pokeObjArr = dexJSON.pokemon_entries.map((entry) => {
+					return { id: entry.entry_number, name: entry.pokemon_species.name }
+				})
+
+				// const pokeArr = pokeObjArr.map(async poke => {
+				pokeObjArr.forEach(async (poke) => {
+					const POKE_URL = `${URL_BASE}/pokemon/${poke.id}`
+					const pokeRes = await fetch(POKE_URL)
+					// if (!pokeRes.ok) throw new Error('could not fetch pokemons')
+					const pokeJSON = await pokeRes.json()
+					// console.log(pokeJSON)
+					const pokeObj = {
+						id    : pokeJSON.id,
+						name  : pokeJSON.name,
+						img   : pokeJSON.sprites.front_default,
+						types : pokeJSON.types.map((type) => type.type.name)
+					}
+					// results show up in jumbled order sometimes, I think because certain results go slower.  so I sort the results by id before updating state
+					await setPokemons((prev) =>
+						[ ...prev, pokeObj ].sort((a, b) => {
+							if (a.id < b.id) return -1
+							if (a.id > b.id) return 1
+							return 0
+						})
+					)
+				})
+			} catch (err) {
+				console.log(err)
+			}
+		}
+		loadData()
+	}, [])
+
 	useEffect(
 		() => {
-			// const API_URL = `${URL_BASE}/pokemon`
-			const DEX_URL = `${URL_BASE}/pokedex/2`
-			const loadData = async () => {
-				try {
-					const dexRes = await fetch(DEX_URL)
-					if (!dexRes.ok) throw new Error('could not fetch pokedex')
-					const dexJSON= await dexRes.json()
-					// setPokemons(json.results)
-					// console.log(json.pokemon_entries.map(entry => {
-					//   return {id: entry.entry_number, name: entry.pokemon_species.name}
-					// }))
-					const pokeObjArr = dexJSON.pokemon_entries.map((entry) => {
-						return { id: entry.entry_number, name: entry.pokemon_species.name }
-					})
-
-          // const pokeArr = pokeObjArr.map(async poke => {
-          pokeObjArr.forEach(async poke => {
-            const POKE_URL = `${URL_BASE}/pokemon/${poke.id}`
-            const pokeRes = await fetch(POKE_URL)
-            // if (!pokeRes.ok) throw new Error('could not fetch pokemons')
-            const pokeJSON = await pokeRes.json()
-            // console.log(pokeJSON)
-            const pokeObj = {
-              id: pokeJSON.id,
-              name: pokeJSON.name,
-              img: pokeJSON.sprites.front_default,
-              types: pokeJSON.types.map(type => type.type.name)
-            }
-            // results show up in jumbled order sometimes, I think because certain results go slower.  so I sort the results by id before updating state
-            await setPokemons(prev => [...prev, pokeObj].sort((a, b) => {
-              if (a.id < b.id) return -1
-              if (a.id > b.id) return 1
-              return 0
-            }))
-          })
-				} catch (err) {
-					console.log(err)
-				}
-			}
-			loadData()
+			if (filterTypes.length === 0) return
+			let filteredPokemons = [ ...pokemons ]
+			filteredPokemons = filteredPokemons.filter((pokemon) => {
+				return (
+					filterTypes.includes(pokemon.types[0]) || filterTypes.includes(pokemon.types[1])
+				)
+			})
+			console.log('filteredPokemons: ', filteredPokemons)
+			setPokemons(filteredPokemons)
 		},
-		[]
+		[ filterTypes ]
 	)
 
 	const search = () => {
@@ -93,11 +106,9 @@ function App() {
 		})
 	}
 
-  const updateFilterTypes = (types) => {
-    setFilterTypes(types)
-  } 
-
-  
+	const updateFilterTypes = (types) => {
+		setFilterTypes(types)
+	}
 
 	return (
 		<React.Fragment>
