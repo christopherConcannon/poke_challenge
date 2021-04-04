@@ -7,6 +7,7 @@ import PokeDex from './components/PokeDex'
 function App() {
 	const [ pokemons, setPokemons ] = useState([])
 	const [ searchTerm, setSearchTerm ] = useState('')
+  const [ filterTypes, setFilterTypes ] = useState([])
 
 	const URL_BASE = 'https://pokeapi.co/api/v2'
 
@@ -92,12 +93,18 @@ function App() {
 		})
 	}
 
+  const updateFilterTypes = (types) => {
+    setFilterTypes(types)
+  } 
+
+  
+
 	return (
 		<React.Fragment>
 			<CssBaseline />
 			<Navbar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 			{/* <PokeDex pokemons={pokemons} /> */}
-			<PokeDex pokemons={search(pokemons)} />
+			<PokeDex pokemons={search(pokemons)} updateFilterTypes={updateFilterTypes} />
 		</React.Fragment>
 	)
 }
