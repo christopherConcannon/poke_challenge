@@ -68,7 +68,8 @@ function App() {
 								// loop over new filteredGroup
 								return filteredGroup.filter((newPoke) => {
 									// return only if their name is present in the old filteredPokemons
-									if (prev.some((oldPoke) => oldPoke.name === newPoke.name)) return true
+									// if (prev.some((oldPoke) => oldPoke.name === newPoke.name)) return true
+                  return prev.some((oldPoke) => oldPoke.name === newPoke.name)
 								})
 							})
 						}
@@ -79,6 +80,11 @@ function App() {
 				loadData()
 			})
 		},
+
+
+    // GETTING THIS WARNING BUT IF I ADD THOSE TO DEP ARRAY I GET INFINITE LOOPING NETWORK REQUESTS
+    // src\App.js
+    // Line 87:3:  React Hook useEffect has missing dependencies: 'filteredPokemons' and 'pokemons'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
 		[ filterTypes ]
 	)
 

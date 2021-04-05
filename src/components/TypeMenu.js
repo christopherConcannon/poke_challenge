@@ -79,3 +79,17 @@ const TypeMenu = ({ updateFilterTypes }) => {
 }
 
 export default TypeMenu
+
+
+// OCCASIONALLY GETTING THIS WARNING, NOT SURE WHY...
+// WDS...
+// index.js:1 Warning: Cannot update a component (`App`) while rendering a different component (`TypeMenu`). To locate the bad setState() call inside `TypeMenu`, follow the stack trace as described in https://reactjs.org/link/setstate-in-render
+//     at TypeMenu (http://localhost:3000/poke_challenge/static/js/main.chunk.js:1014:3)
+//     at div
+//     at Grid (http://localhost:3000/poke_challenge/static/js/vendors~main.chunk.js:4277:35)
+//     at WithStyles(ForwardRef(Grid)) (http://localhost:3000/poke_challenge/static/js/vendors~main.chunk.js:11141:31)
+//     at div
+//     at Grid (http://localhost:3000/poke_challenge/static/js/vendors~main.chunk.js:4277:35)
+//     at WithStyles(ForwardRef(Grid)) (http://localhost:3000/poke_challenge/static/js/vendors~main.chunk.js:11141:31)
+//     at PokeDex (http://localhost:3000/poke_challenge/static/js/main.chunk.js:830:3)
+//     at App (http://localhost:3000/poke_challenge/static/js/main.chunk.js:34:89)
