@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { makeStyles } from '@material-ui/core/styles'
+
 import Grid from '@material-ui/core/Grid'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
@@ -7,6 +7,7 @@ import CardMedia from '@material-ui/core/CardMedia'
 import ButtonGroup from '@material-ui/core/ButtonGroup'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
+import { makeStyles } from '@material-ui/core/styles'
 
 import { getTypeColor } from '../utils/helpers'
 
@@ -86,8 +87,7 @@ const PokeCard = ({ data }) => {
 								<CardMedia
 									component='img'
 									alt={pokemon.name}
-									// image={pokemon.sprites?.front_default}
-									image={pokemon.sprites && pokemon.sprites.front_default}
+									image={pokemon.sprites?.front_default}
 									title={pokemon.name}
 								/>
 							</div>
@@ -101,9 +101,7 @@ const PokeCard = ({ data }) => {
 								{pokemon.name}
 							</Typography>
 							<ButtonGroup className={classes.buttonGroup} aria-label='button group'>
-								{/* {pokemon.types?.map((type, idx) => ( */}
-								{pokemon.types &&
-									pokemon.types.map((type, idx) => {
+								{pokemon.types?.map((type, idx) => {
 										return (
 											<Button
 												className={classes.button}
@@ -122,7 +120,7 @@ const PokeCard = ({ data }) => {
 			)}
 		</React.Fragment>
 
-		// QUESTION -- is there a method to access resources located at a url which is a JSON property.  So for example I could access the individual pokemon data like below so I wouldn't have to make network requests for each individual pokemon.  the JSON object returned by the API_URL/pokemon endpoint looks like { name: 'whatever', url: 'https://pokeapi.co/api/v2/pokemon/1/'}, but trying to access
+		// QUESTION -- is there a method to access resources located at a url which is a JSON property.  So for example I could access the individual pokemon data like below so I wouldn't have to make network requests for each individual pokemon.  the JSON object returned by the API_URL/pokemon endpoint looks like { name: 'whatever', url: 'https://pokeapi.co/api/v2/pokemon/1/'}
 		// <Grid item xs={4} sm={3}>
 		// 	<Card className={classes.root}>
 		// 		<CardContent>

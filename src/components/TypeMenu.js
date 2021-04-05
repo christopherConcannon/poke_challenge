@@ -39,11 +39,13 @@ const TypeMenu = ({ updateFilterTypes }) => {
 	const handleChange = (e) => {
 		if (checked.length === 2 && !checked.includes(e.target.name)) return
 		setChecked((prev) => {
-      return prev.includes(e.target.name) ? prev.filter(type => type !== e.target.name) : [ ...prev, e.target.name ]
-    })
+			return prev.includes(e.target.name)
+				? prev.filter((type) => type !== e.target.name)
+				: [ ...prev, e.target.name ]
+		})
 	}
-  
-  updateFilterTypes(checked)
+
+	updateFilterTypes(checked)
 
 	return (
 		<div>
@@ -57,10 +59,14 @@ const TypeMenu = ({ updateFilterTypes }) => {
 						control={
 							<Checkbox
 								checked={checked.includes(type.name)}
-                disabled={checked.length === 2 && !checked.includes(type.name)}
+								disabled={checked.length === 2 && !checked.includes(type.name)}
 								name={type.name}
-								// style={{ color: `${getTypeColor(type.name)}` }}
-                style={{ color: checked.length === 2 && !checked.includes(type.name) ? 'rgba(0, 0, 0, 0.38)' :  `${getTypeColor(type.name)}`}}
+								style={{
+									color :
+										checked.length === 2 && !checked.includes(type.name)
+											? 'rgba(0, 0, 0, 0.38)'
+											: `${getTypeColor(type.name)}`
+								}}
 								onChange={handleChange}
 							/>
 						}
