@@ -79,7 +79,7 @@ const PokeCard = ({ data }) => {
 	return (
 		<React.Fragment>
 			{pokemon && (
-				<Grid item xs={12} sm={6} md={3} >
+				<Grid item xs={12} sm={6} md={3}>
 					<Card className={classes.root}>
 						<CardContent>
 							<Typography className={classes.id} component='h3'>{`#${id}`}</Typography>

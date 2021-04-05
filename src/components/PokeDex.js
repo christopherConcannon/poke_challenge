@@ -4,7 +4,6 @@ import Grid from '@material-ui/core/Grid'
 import { makeStyles } from '@material-ui/core/styles'
 
 import TypeMenu from './TypeMenu'
-import PaginationContainer from './PaginationContainer'
 import PokeList from './PokeList'
 
 const useStyles = makeStyles((theme) => ({
@@ -22,12 +21,7 @@ const PokeDex = ({ pokemons, updateFilterTypes }) => {
 				<TypeMenu updateFilterTypes={updateFilterTypes} />
 			</Grid>
 			<Grid item xs={8} sm={10}>
-				<PaginationContainer
-					RenderComponent={PokeList}
-					data={pokemons}
-					dataLimit={20}
-					pageLimit={5}
-				/>
+        <PokeList pokemons={pokemons} />
 			</Grid>
 		</Grid>
 	)
