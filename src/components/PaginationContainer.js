@@ -1,14 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
-import { makeStyles } from '@material-ui/core/styles';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 
 import usePagination from '../hooks/usePagination'
 
 const PaginationContainer = ({ data, RenderComponent, dataLimit, pageLimit }) => {
-
   const { currentPage, goToPrevPage, goToNextPage, changePage, getPagesData, getPaginationGroup } = usePagination(data, dataLimit, pageLimit)
 
 	const pages = Math.ceil(data.length / dataLimit)
+
+  useEffect(() => {
+    window.scrollTo({ behavior: 'smooth', top: '0px' })
+  }, [currentPage])
 
 	return (
 		<div className='table-container'>
@@ -16,7 +20,7 @@ const PaginationContainer = ({ data, RenderComponent, dataLimit, pageLimit }) =>
 
 			<div className='pagination'>
 				<button className={`prev ${currentPage === 1 && 'disabled'}`} onClick={goToPrevPage}>
-					prev
+					<ChevronLeftIcon fontSize="small" />
 				</button>
 				{getPaginationGroup().map((page) => (
 					<button
@@ -31,7 +35,7 @@ const PaginationContainer = ({ data, RenderComponent, dataLimit, pageLimit }) =>
 					className={`next ${currentPage === pages && 'disabled'}`}
 					onClick={goToNextPage}
 				>
-					next
+					<ChevronRightIcon fontSize="small" />
 				</button>
 			</div>
 		</div>

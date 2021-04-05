@@ -25,7 +25,7 @@ const PokeDex = ({ pokemons, updateFilterTypes }) => {
 				<PaginationContainer
 					RenderComponent={PokeList}
 					data={pokemons}
-					dataLimit={10}
+					dataLimit={20}
 					pageLimit={5}
 				/>
 			</Grid>

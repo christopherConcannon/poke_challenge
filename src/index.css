@@ -1,0 +1,41 @@
+.pagination {
+  display: flex;
+  margin-top: 1rem;
+}
+
+.prev, .pagination-item, .next {
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
+  margin-right: .3rem;
+  /* border: 1px solid #B3B3B3; */
+  border: 1px solid #BF625F;
+  background-color: transparent;
+  /* color: #494949; */
+  color: #BF625F;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+}
+
+.prev svg, .next svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%)
+}
+
+.disabled, .disabled svg {
+  color: rgba(179, 179, 179, 0.514);
+  border-color:  rgba(179, 179, 179, 0.514);
+  pointer-events: none;
+}
+
+.prev:hover, .pagination-item:hover, .next:hover {
+  background-color: #bf625f2d;
+  transition: all .15s ease-in;
+}
+
+.pagination-item.active {
+  background-color:  #bf625f69;
+}
