@@ -1,17 +1,20 @@
 {
   "files": {
-    "main.js": "/poke_challenge/static/js/main.4d31d494.chunk.js",
-    "main.js.map": "/poke_challenge/static/js/main.4d31d494.chunk.js.map",
+    "main.css": "/poke_challenge/static/css/main.a30071b8.chunk.css",
+    "main.js": "/poke_challenge/static/js/main.92d7dec1.chunk.js",
+    "main.js.map": "/poke_challenge/static/js/main.92d7dec1.chunk.js.map",
     "runtime-main.js": "/poke_challenge/static/js/runtime-main.aef68456.js",
     "runtime-main.js.map": "/poke_challenge/static/js/runtime-main.aef68456.js.map",
-    "static/js/2.99f98e03.chunk.js": "/poke_challenge/static/js/2.99f98e03.chunk.js",
-    "static/js/2.99f98e03.chunk.js.map": "/poke_challenge/static/js/2.99f98e03.chunk.js.map",
+    "static/js/2.6969f190.chunk.js": "/poke_challenge/static/js/2.6969f190.chunk.js",
+    "static/js/2.6969f190.chunk.js.map": "/poke_challenge/static/js/2.6969f190.chunk.js.map",
     "index.html": "/poke_challenge/index.html",
-    "static/js/2.99f98e03.chunk.js.LICENSE.txt": "/poke_challenge/static/js/2.99f98e03.chunk.js.LICENSE.txt"
+    "static/css/main.a30071b8.chunk.css.map": "/poke_challenge/static/css/main.a30071b8.chunk.css.map",
+    "static/js/2.6969f190.chunk.js.LICENSE.txt": "/poke_challenge/static/js/2.6969f190.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.aef68456.js",
-    "static/js/2.99f98e03.chunk.js",
-    "static/js/main.4d31d494.chunk.js"
+    "static/js/2.6969f190.chunk.js",
+    "static/css/main.a30071b8.chunk.css",
+    "static/js/main.92d7dec1.chunk.js"
   ]
 }
