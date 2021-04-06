@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 
-import { getTypeColor } from '../utils/helpers'
+import { typeColors } from '../styles/typeColors'
 
 const useStyles = makeStyles((theme) => ({
 	root           : {
@@ -107,7 +107,7 @@ const PokeCard = ({ data }) => {
 												className={classes.button}
 												key={idx}
 												disableElevation
-												style={{ backgroundColor: `${getTypeColor(type.type.name)}` }}
+												style={{ backgroundColor: `${typeColors[type.type.name]}` }}
 											>
 												{type.type.name}
 											</Button>

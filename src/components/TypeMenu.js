@@ -5,7 +5,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
 import { makeStyles } from '@material-ui/core/styles'
 
-import { getTypeColor } from '../utils/helpers'
+import { typeColors } from '../styles/typeColors'
 
 const useStyles = makeStyles((theme) => ({
 	heading : {
@@ -65,7 +65,7 @@ const TypeMenu = ({ updateFilterTypes }) => {
 									color :
 										checked.length === 2 && !checked.includes(type.name)
 											? 'rgba(0, 0, 0, 0.38)'
-											: `${getTypeColor(type.name)}`
+											: `${typeColors[type.name]}`
 								}}
 								onChange={handleChange}
 							/>
