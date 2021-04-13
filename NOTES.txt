@@ -1,0 +1,11 @@
+NOTES ON JOSH'S VERSION 
+
+Promise.all()
+
+i like the constants module.  it also makes the components a lot cleaner
+
+i wasn't sure how to nest material ui grid
+
+i shouldn't have gotten types from their own endpoint since i already had them
+
+how do you define the 'render' section of the component.  i've only recently started running functions (usually array methods) in the component scope (ie not in useEffect or inside an event handler)
