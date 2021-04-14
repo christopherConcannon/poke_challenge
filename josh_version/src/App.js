@@ -107,8 +107,11 @@ function App() {
 	let filteredPokemons =
 		filterTypes.length === 0
 			? pokemons
+      // include in new array only pokemons that have the same filter types that are in the filterTypes array
 			: pokemons.filter((pokemon) =>
+          // return true (and be included in filtered pokemons array) if every filter type in filterTypes array passes test function
 					filterTypes.every((filterTypes) =>
+            // look in types array of each pokemon and return the first type that matches the filterTypes
 						pokemon.types.find(
 							(pokemonType) => filterTypes === pokemonType.type?.name
 						)

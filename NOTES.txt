@@ -1,5 +1,7 @@
 NOTES ON JOSH'S VERSION 
 
+bug...weird 
+
 Promise.all()
 
 i like the constants module.  it also makes the components a lot cleaner
